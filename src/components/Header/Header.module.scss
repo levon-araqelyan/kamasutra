@@ -1,0 +1,12 @@
+.header{
+  grid-area: h;
+  background: #070e14;
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 50px;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+}

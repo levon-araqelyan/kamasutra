@@ -1,0 +1,29 @@
+.nav{
+  grid-area: n;
+  background: #070e14;
+  height: calc(100vh - 70px);
+
+
+  .items {
+    line-height: 50px;
+    margin-top: 10px;
+    cursor: pointer;
+    padding-left: 20px;
+
+    &:hover{
+      background: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+  }
+
+  .active{
+   .items {
+     background: rgba(255, 255, 255, 0.3);
+   }
+  }
+}

@@ -1,0 +1,16 @@
+.dialogWrap {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+
+  .dialogItems {
+    padding: 10px;
+    .dialogAActive{
+      color: gold;
+    }
+  }
+
+  .messages {
+    padding: 10px;
+
+  }
+}
