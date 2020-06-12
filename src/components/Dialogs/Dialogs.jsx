@@ -1,21 +1,21 @@
 import React from "react"
 import s from "./Dialogs.module.scss"
+import DialogItem from "./DialogItem/DialogItem";
+import Massages from "./Massages/Massages";
 
-const Dialogs = () => {
+const Dialogs = ({messegesData,dialogsData}) => {
+
     return (
         <div className={s.dialogWrap}>
             <div className={s.dialogItems}>
-                <div className={`${s.dialog} ${s.dialogAActive}`}>Levon</div>
-                <div className={s.dialog}>Artur</div>
-                <div className={s.dialog}>Maria</div>
-                <div className={s.dialog}>Papa</div>
-                <div className={s.dialog}>Mama</div>
-
+                {dialogsData.map(item => (
+                    <DialogItem name={item.name} id={item.id} key={item.id}/>
+                ))}
             </div>
             <div className={s.messages}>
-                <div className={s.message}>yo</div>
-                <div className={s.message}>ba ba</div>
-                <div className={s.message}>go go</div>
+                {messegesData.map(item => (
+                    <Massages key={item.id} text={item.text}/>
+                ))}
             </div>
         </div>
     )

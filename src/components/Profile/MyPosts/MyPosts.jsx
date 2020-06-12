@@ -2,16 +2,16 @@ import React from 'react'
 import s from "./MyPosts.module.scss"
 import Post from "./Post/Post";
 
-const MyPosts = () => {
+const MyPosts = ({postData}) => {
     return (
         <div className={s.wrap}>
-            my post
-            <div>new post</div>
+            <h3>my post</h3>
+            <div><textarea /></div>
+            <button>New post</button>
             <div>
-                <Post/>
-                <Post/>
-                <Post/>
-                <Post/>
+                {postData.map(item => (
+                    <Post key={item.id} message={item.message} likeCount={item.likeCount}/>
+                ))}
             </div>
         </div>
     )
