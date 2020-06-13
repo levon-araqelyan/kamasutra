@@ -1,0 +1,58 @@
+.chatWrap {
+  //width: 100%;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 11px 24px 12px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #a6a5a5eb;
+
+
+  & svg {
+    cursor: pointer;
+  }
+}
+
+.textareaWrap {
+  background: rgba(0, 0, 0, 0.38);
+  border-radius: 16px;
+  max-width: 1040px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  padding-right: 16px;
+}
+
+textarea {
+  width: 100%;
+  outline: none !important;
+  border: unset;
+  color: white;
+  background: unset;
+  resize: none;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding-left: 6px;
+  overflow-x: hidden;
+  font-size-adjust: 100%;
+  font-family: monospace;
+  display: flex;
+}
+textarea::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.5);
+}
+.textarea {
+  .textarea::-webkit-scrollbar {
+    width: 0;
+  }
+}

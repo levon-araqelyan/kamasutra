@@ -2,12 +2,12 @@ import React from 'react'
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = ({state:{postData,newPostText},addPost,setNewPostText}) => {
+const Profile = ({state:{postData,newPostText},dispatch}) => {
 
     return (
         <>
            <ProfileInfo />
-            <MyPosts postData={postData} addPost={addPost} newPostText={newPostText} setNewPostText={setNewPostText}/>
+            <MyPosts postData={postData} newPostText={newPostText} dispatch={dispatch}/>
         </>
     )
 }

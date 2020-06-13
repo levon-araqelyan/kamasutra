@@ -1,23 +1,26 @@
 import React from 'react'
 import s from "./MyPosts.module.scss"
 import Post from "./Post/Post";
+import {addPostActionCreator, setNewPostTextActionCreator} from "../../../redux/state";
+import MessengerChatInput from "../../MessengerChatInput/MessengerChatInput";
 
-const MyPosts = ({postData, addPost,newPostText,setNewPostText}) => {
+const MyPosts = ({postData,newPostText,dispatch}) => {
 
 
     const addPosts = () => {
-        addPost();
+        dispatch(addPostActionCreator());
     };
 
-    const handleTextareaChange = (e) => {
-       setNewPostText(e.target.value)
+    const handleTextareaChange = (value) => {
+        dispatch( setNewPostTextActionCreator(value))
     };
 
     return (
         <div className={s.wrap}>
             <h3>my post</h3>
-            <div><textarea onChange={(e)=> handleTextareaChange(e)} value={newPostText}/></div>
-            <button onClick={addPosts}>New post</button>
+            <div>
+                <MessengerChatInput setValue={handleTextareaChange} sendMessage={addPosts}  valueOfInput={newPostText}/>
+            </div>
             <div>
                 {postData.map(item => (
                     <Post key={item.id} message={item.message} likeCount={item.likeCount}/>

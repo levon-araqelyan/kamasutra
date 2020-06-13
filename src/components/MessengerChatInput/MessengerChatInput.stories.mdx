@@ -1,0 +1,21 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks"
+import MessengerChatInput from "./MessengerChatInput"
+import {action} from "@storybook/addon-actions"
+
+
+<Meta title="elements/MessengerChatInput" component={MessengerChatInput} />
+
+# MessengerChatInput
+
+
+<Preview>
+  <Story name="MessengerChatInput">
+    <div style={{ width: "911px" }}>
+      <MessengerChatInput
+        sendMessage={action("sendMessage")}
+      />
+    </div>
+  </Story>
+</Preview>
+
+<Props of={MessengerChatInput} />
