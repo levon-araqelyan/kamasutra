@@ -6,7 +6,7 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 
-function App({postData,messegesData,dialogsData}) {
+function App({state : {profilePage,dialogsPage},addPost,setNewPostText}) {
     return (
         <div className="AppWrapper">
             <BrowserRouter>
@@ -14,8 +14,8 @@ function App({postData,messegesData,dialogsData}) {
                 <NavBar/>
                 <div className="AppContainer">
 
-                        <Route path="/profile" render={()=><Profile postData={postData}/>}/>
-                        <Route path="/dialogs" render={()=> <Dialogs messegesData={messegesData} dialogsData={dialogsData}/>}/>
+                        <Route path="/profile" render={()=><Profile state={profilePage} addPost={addPost} setNewPostText={setNewPostText}/>}/>
+                        <Route path="/dialogs" render={()=> <Dialogs messagesData={dialogsPage.messegesData} dialogsData={dialogsPage.dialogsData}/>}/>
 
 
                 </div>

@@ -3,7 +3,7 @@ import s from "./Dialogs.module.scss"
 import DialogItem from "./DialogItem/DialogItem";
 import Massages from "./Massages/Massages";
 
-const Dialogs = ({messegesData,dialogsData}) => {
+const Dialogs = ({messagesData,dialogsData}) => {
 
     return (
         <div className={s.dialogWrap}>
@@ -13,7 +13,7 @@ const Dialogs = ({messegesData,dialogsData}) => {
                 ))}
             </div>
             <div className={s.messages}>
-                {messegesData.map(item => (
+                {messagesData.map(item => (
                     <Massages key={item.id} text={item.text}/>
                 ))}
             </div>
