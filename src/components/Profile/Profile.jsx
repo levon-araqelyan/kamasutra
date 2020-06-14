@@ -1,13 +1,13 @@
 import React from 'react'
-import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import MyPostsContainer from "./MyPosts/MypostContainer";
 
-const Profile = ({state:{postData,newPostText},dispatch}) => {
+const Profile = () => {
 
     return (
         <>
            <ProfileInfo />
-            <MyPosts postData={postData} newPostText={newPostText} dispatch={dispatch}/>
+            <MyPostsContainer />
         </>
     )
 }
