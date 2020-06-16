@@ -2,10 +2,10 @@ import React from 'react'
 import './App.scss';
 import Header from "./components/Header/Header";
 import NavBar from "./components/NavBar/NavBar";
-import Profile from "./components/Profile/Profile";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {Route} from "react-router-dom";
 import UsersContainer from "./components/users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 function App() {
     return (
@@ -15,7 +15,7 @@ function App() {
             <NavBar/>
             <div className="AppContainer">
 
-                <Route path="/profile" render={() => <Profile/>}/>
+                <Route path="/profile/:userId?" render={() => <ProfileContainer />}/>
                 <Route path="/users" render={() => <UsersContainer/>}/>
                 <Route path="/dialogs"
                        render={() => <DialogsContainer/>}/>

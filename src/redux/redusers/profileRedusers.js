@@ -1,5 +1,6 @@
 const SET_NEW_POST_TEXT = "SET_NEW_POST_TEXT";
 const ADD_POST = "ADD_POST";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
 
 const initialState = {
     postData: [
@@ -9,6 +10,7 @@ const initialState = {
         {id: 4, message: "true", likeCount: 8},
         {id: 5, message: "false", likeCount: 6},
     ],
+    profile:null,
     newPostText: ""
 };
 
@@ -32,6 +34,14 @@ const profileReduser = (state = initialState, action) => {
 
         }
 
+        case SET_USER_PROFILE : {
+            return {
+                ...state,
+                profile: action.payload
+            }
+
+        }
+
         default: {
             return state
         }
@@ -48,6 +58,13 @@ export const setNewPostTextActionCreator = (value) => {
     return {
         type: SET_NEW_POST_TEXT,
         payload: value
+    }
+};
+
+export const setUserProfile = (data) => {
+    return {
+        type: SET_USER_PROFILE,
+        payload: data
     }
 };
 

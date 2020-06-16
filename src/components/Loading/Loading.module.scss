@@ -1,0 +1,12 @@
+.loadingWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 80px);
+  
+    p {
+      margin-top: 8px;
+    }
+  }
+  
