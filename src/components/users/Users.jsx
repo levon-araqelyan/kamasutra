@@ -4,21 +4,25 @@ import emoji from "../../imges/emoji.jpg";
 import Pagination from "../Pagination/Pagination";
 import {NavLink} from "react-router-dom";
 
-const Users = ({totalCount, pageSize, currentPage, changePage, users, handleFollowed}) => {
+const Users = ({totalCount, pageSize, currentPage, changePage, users, handleFollowed,followProgress}) => {
 
     return (
-        <div>
 
+        <div>
             <Pagination pageSize={pageSize} totalCount={totalCount} pageButtons={changePage} page={currentPage}/>
             {users.map(el => (
                 <div className={s.usersWrap}>
 
                     <div className={s.imgWrap}>
-                        <NavLink to= {`/profile/${el.id}`}>
+                        <NavLink to={`/profile/${el.id}`}>
                             <img src={el.photos.small ? el.photos.small : emoji} alt="user img"/>
                         </NavLink>
                         <button
-                            onClick={() => handleFollowed(el.followed, el.id)}>{el.followed ? "unfollow" : "follow"}</button>
+                            onClick={() => handleFollowed(el.followed, el.id)}
+                            disabled={followProgress.some(i => i === el.id)}
+                        >
+                            {el.followed ? "Unfollow" : "follow"}
+                        </button>
                     </div>
 
                     <div className={s.infoWrap}>

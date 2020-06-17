@@ -3,10 +3,26 @@
   background: #070e14;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   img {
     width: 50px;
     margin-left: 20px;
     cursor: pointer;
+  }
+
+  .login{
+    font-size: 20px;
+    a {
+      color:white;
+      text-decoration: none;
+    }
+
+    p {
+      color:white;
+
+    }
+
+    margin-right: 50px;
   }
 }
