@@ -38,8 +38,8 @@ export const setAuthUserData = (userId,email,login) => {
 };
 
 export const getAuthUserDataThunkAction = () => {
-    return dispatch => {
-        authApi.me()
+    return  dispatch => {
+         authApi.me()
             .then(({data}) => {
 
                 if(data.resultCode === 0){

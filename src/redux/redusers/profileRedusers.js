@@ -1,8 +1,9 @@
-import {usersApi} from "../../api/api";
+import {profileApi, usersApi} from "../../api/api";
 
 const SET_NEW_POST_TEXT = "SET_NEW_POST_TEXT";
 const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
 
 const initialState = {
     postData: [
@@ -13,7 +14,8 @@ const initialState = {
         {id: 5, message: "false", likeCount: 6},
     ],
     profile:null,
-    newPostText: ""
+    newPostText: "",
+    status:""
 };
 
 
@@ -33,6 +35,14 @@ const profileReduser = (state = initialState, action) => {
                ...state,
                newPostText: action.payload
            }
+
+        }
+
+        case SET_STATUS : {
+            return {
+                ...state,
+                status: action.payload
+            }
 
         }
 
@@ -70,10 +80,39 @@ export const setUserProfile = (data) => {
     }
 };
 
+export const setStatus = (status) => {
+    return {
+        type: SET_STATUS,
+        payload: status
+    }
+};
+
+export const getStatus = (userId) => {
+    return dispatch => {
+
+        profileApi.getStatus(userId)
+            .then(({data}) => {
+                dispatch(setStatus(data));
+            })
+    }
+};
+
+export const updateStatus = (status) => {
+
+    return dispatch => {
+        profileApi.updateStatus(status)
+            .then(({data}) => {
+                debugger
+                if(data.resultCode === 0){
+                    dispatch(setStatus(status));
+                }
+            })
+    }
+};
 
 export const setUserProfileThunkAction = (userId) => {
     return dispatch => {
-        usersApi.getProfile(userId)
+        profileApi.getProfile(userId)
             .then(({data}) => {
                 dispatch(setUserProfile(data));
             })

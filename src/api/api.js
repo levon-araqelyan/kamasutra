@@ -17,10 +17,19 @@ export const usersApi = {
     },
     Unfollow(id){
         return  istanse.post(`follow/${id}`)
-    },
+    }
+}
+
+export const profileApi = {
     getProfile(userId){
         return istanse.get(`profile/${userId ? userId : 8}`)
-    }
+    },
+    getStatus(userId){
+        return istanse.get(`profile/status/${userId}`)
+    },
+    updateStatus(status){
+        return istanse.put(`profile/status`,{status:status})
+    },
 
 }
 
