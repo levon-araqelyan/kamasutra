@@ -1,3 +1,5 @@
+import {usersApi} from "../../api/api";
+
 const SET_NEW_POST_TEXT = "SET_NEW_POST_TEXT";
 const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -68,6 +70,15 @@ export const setUserProfile = (data) => {
     }
 };
 
+
+export const setUserProfileThunkAction = (userId) => {
+    return dispatch => {
+        usersApi.getProfile(userId)
+            .then(({data}) => {
+                dispatch(setUserProfile(data));
+            })
+    }
+};
 
 export default profileReduser
 

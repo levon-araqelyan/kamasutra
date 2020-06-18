@@ -7,23 +7,25 @@ const istanse = axios.create({
     }
 })
 
-
-// export const getUsers = (currentPage,pageSize)=> {
-//    return  istanse.get(`users?page=${currentPage}&count=${pageSize}`)
-//        .then(response => response.data)
-// }
-
 export const usersApi = {
     getUsers(currentPage,pageSize){
         return  istanse.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data)
     },
     follow(id){
-       return  istanse.delete(`follow/${id}`)
+        return  istanse.delete(`follow/${id}`)
     },
     Unfollow(id){
-       return  istanse.post(`follow/${id}`)
+        return  istanse.post(`follow/${id}`)
+    },
+    getProfile(userId){
+        return istanse.get(`profile/${userId ? userId : 8}`)
     }
 
 }
 
+export const authApi = {
+    me(){
+        return istanse.get(`auth/me`)
+    }
+}

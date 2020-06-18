@@ -1,3 +1,6 @@
+import {authApi, usersApi} from "../../api/api";
+import {setUserProfile} from "./profileRedusers";
+
 const SET_USER_DATA = "SET_USER_DATA";
 
 const initialState = {
@@ -31,6 +34,18 @@ export const setAuthUserData = (userId,email,login) => {
             email,
             login
         }
+    }
+};
+
+export const getAuthUserDataThunkAction = () => {
+    return dispatch => {
+        authApi.me()
+            .then(({data}) => {
+
+                if(data.resultCode === 0){
+                    dispatch(setAuthUserData(data.data.id,data.data.email,data.data.login))
+                }
+            })
     }
 };
 

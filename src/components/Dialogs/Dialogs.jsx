@@ -4,6 +4,7 @@ import DialogItem from "./DialogItem/DialogItem";
 import Massages from "./Massages/Massages";
 import MessengerChatInput from "../MessengerChatInput/MessengerChatInput";
 
+
 const Dialogs = ({addDialogsMessage,handleTextareaChange,state}) => {
     return (
         <div className={s.dialogWrap}>

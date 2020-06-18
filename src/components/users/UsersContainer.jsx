@@ -7,6 +7,8 @@ import usersRedusers, {
 import {connect} from "react-redux";
 import Users from "./Users";
 import Loading from "../Loading/Loading";
+import {compose} from "redux";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 
 class UsersContainer extends React.Component {
@@ -59,12 +61,15 @@ const mapStateToProps =(state)=> {
     }
 }
 
+export default compose(
+    connect(mapStateToProps,{
+        follow ,
+        loading,
+        followingInProgress,
+        getUsersThunkCreator,
+        followThunkCreator,
+        UnfollowThunkCreator
+    }),
+    WithAuthRedirect,
+)(UsersContainer)
 
-export default connect(mapStateToProps,{
-    follow ,
-    loading,
-    followingInProgress,
-    getUsersThunkCreator,
-    followThunkCreator,
-    UnfollowThunkCreator
-})(UsersContainer)

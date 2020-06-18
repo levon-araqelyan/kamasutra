@@ -1,22 +1,19 @@
 import React from "react"
 import Profile from "./Profile";
 import {withRouter} from "react-router-dom";
-import * as axios from "axios";
 import {connect} from "react-redux";
 import {loading} from "../../redux/redusers/usersRedusers";
-import {setUserProfile} from "../../redux/redusers/profileRedusers";
+import {setUserProfileThunkAction} from "../../redux/redusers/profileRedusers";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {compose} from "redux";
 
-class ProfileContainer extends React.Component{
+class ProfileContainer extends React.Component {
     componentDidMount() {
         const {userId} = this.props.match.params;
-        this.props.loading(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId ? userId : 8}`).then(({data}) => {
-            this.props.setUserProfile(data);
-            this.props.loading(false)
-        })
+        this.props.setUserProfileThunkAction(userId)
     }
 
-    render (){
+    render() {
         return (
             <Profile {...this.props} profile={this.props.profile}/>
         )
@@ -24,7 +21,11 @@ class ProfileContainer extends React.Component{
 }
 
 const mapStateToPros = (state) => ({
-    profile : state.profileReduser.profile
-})
+    profile: state.profileReduser.profile,
+});
 
-export default withRouter(connect(mapStateToPros,{loading,setUserProfile})(ProfileContainer))
+export default compose(
+    withRouter,
+    connect(mapStateToPros,{loading, setUserProfileThunkAction}),
+        WithAuthRedirect,
+    )(ProfileContainer)
