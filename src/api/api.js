@@ -36,5 +36,11 @@ export const profileApi = {
 export const authApi = {
     me(){
         return istanse.get(`auth/me`)
+    },
+    login(email,password,rememberMe = false){
+        return istanse.post(`auth/login`,{email,password,rememberMe})
+    },
+    logout(){
+        return istanse.delete(`auth/login`)
     }
 }

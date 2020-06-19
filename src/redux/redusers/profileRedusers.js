@@ -9,11 +9,8 @@ const initialState = {
     postData: [
         {id: 1, message: "my first post", likeCount: 1},
         {id: 2, message: "yes", likeCount: 11},
-        {id: 3, message: "no", likeCount: 22},
-        {id: 4, message: "true", likeCount: 8},
-        {id: 5, message: "false", likeCount: 6},
     ],
-    profile:null,
+    profile: null,
     newPostText: "",
     status:""
 };
@@ -102,7 +99,6 @@ export const updateStatus = (status) => {
     return dispatch => {
         profileApi.updateStatus(status)
             .then(({data}) => {
-                debugger
                 if(data.resultCode === 0){
                     dispatch(setStatus(status));
                 }

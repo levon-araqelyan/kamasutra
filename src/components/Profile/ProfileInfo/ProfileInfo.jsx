@@ -12,9 +12,6 @@ const ProfileInfo = (props) => {
     }
     return (
         <div className={s.infoWrap}>
-            {/*<div className={s.imgWrap}>*/}
-            {/*    <img src={wolf}/>*/}
-            {/*</div>*/}
             <div className={s.avatar}>
                 <img src={props.profile.photos.large || emoji} alt="no photo"/>
                 <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>

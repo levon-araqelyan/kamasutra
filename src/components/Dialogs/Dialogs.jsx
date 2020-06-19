@@ -17,7 +17,13 @@ const Dialogs = ({addDialogsMessage,handleTextareaChange,state}) => {
                 {state.messegesData.map(item => (
                     <Massages key={item.id} text={item.text}/>
                 ))}
-                <MessengerChatInput setValue={handleTextareaChange} sendMessage={addDialogsMessage}  valueOfInput={state.newMessageText}/>
+
+                <MessengerChatInput
+                    setValue={handleTextareaChange}
+                    sendMessage={addDialogsMessage}
+                    valueOfInput={state.newMessageText}
+                />
+
             </div>
         </div>
     )

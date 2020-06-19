@@ -4,22 +4,6 @@ import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 
 
-// const MyPostsContainer = (props) => {
-//
-//     const state = props.store.getState()
-//
-//     const addPosts = () => {
-//         dispatch(addPostActionCreator());
-//     };
-//
-//     const handleTextareaChange = (value) => {
-//         dispatch( setNewPostTextActionCreator(value))
-//     };
-//
-//     return (
-//         <MyPosts />
-//     )
-// }
 
 const mapStateToProps = (state)=>{
     return {

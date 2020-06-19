@@ -1,5 +1,6 @@
-import {authApi, usersApi} from "../../api/api";
-import {setUserProfile} from "./profileRedusers";
+import {authApi} from "../../api/api";
+import {stopSubmit} from "redux-form";
+
 
 const SET_USER_DATA = "SET_USER_DATA";
 
@@ -17,7 +18,6 @@ const authReduser = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload,
-                isAuth:true
             };
         }
         default: {
@@ -26,24 +26,52 @@ const authReduser = (state = initialState, action) => {
     }
 };
 
-export const setAuthUserData = (userId,email,login) => {
+export const setAuthUserData = (userId,email,login,isAuth) => {
     return {
         type: SET_USER_DATA,
         payload: {
             userId,
             email,
-            login
+            login,
+            isAuth
         }
     }
 };
 
 export const getAuthUserDataThunkAction = () => {
     return  dispatch => {
-         authApi.me()
+        return  authApi.me()
+            .then(({data}) => {
+                if(data.resultCode === 0){
+                    dispatch(setAuthUserData(data.data.id,data.data.email,data.data.login,true))
+                }
+            })
+    }
+};
+
+export const loginThunkAction = (email,password,rememberMe) => {
+    return  dispatch => {
+
+        authApi.login(email,password,rememberMe)
             .then(({data}) => {
 
                 if(data.resultCode === 0){
-                    dispatch(setAuthUserData(data.data.id,data.data.email,data.data.login))
+                    dispatch(getAuthUserDataThunkAction())
+                }else {
+                    let message = data.messages.length > 0 ? data.messages[0] : "yor login or password not true";
+                    dispatch(stopSubmit("login",{_error:message}))
+                }
+            })
+    }
+};
+
+export const logoutThunkAction = () => {
+    return  dispatch => {
+        authApi.logout()
+            .then(({data}) => {
+
+                if(data.resultCode === 0){
+                    dispatch(setAuthUserData(null,null,null,false))
                 }
             })
     }

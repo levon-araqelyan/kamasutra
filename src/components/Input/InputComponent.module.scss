@@ -1,0 +1,19 @@
+.inputWrap {
+
+
+  input {
+    width: 280px;
+    height: 30px;
+    border : 1px solid greenyellow;
+  }
+
+  .errorMessage{
+    color: red;
+  }
+}
+
+.errorWrap{
+  input{
+    border : 1px solid red !important
+  }
+}
