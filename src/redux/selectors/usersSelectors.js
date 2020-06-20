@@ -1,10 +1,18 @@
-export const getUsers = state => {
+import {createSelector} from "reselect"
+
+
+const getUsers = state => {
     return state.usersRedusers
 }
+
+export const getUsersWithSelector = createSelector( getUsers ,(users)=>{
+    return  users
+})
 
 export const getTotalCount = state => {
     return state.usersRedusers.totalCount
 }
+
 
 export const getPageSize= state => {
     return state.usersRedusers.pageSize
