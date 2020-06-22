@@ -12,6 +12,7 @@ import {getAuthUserDataThunkAction} from "./redux/redusers/authRedusers";
 import {compose} from "redux";
 import {initializeApp} from "./redux/redusers/appRedusers";
 import Loading from "./components/Loading/Loading";
+import {WithSuspanse} from "./hoc/WithSuspanse";
 
 class App extends Component {
 
@@ -32,7 +33,7 @@ class App extends Component {
                     <Route path="/users" render={() => <UsersContainer/>}/>
                     <Route path="/login" render={() => <LoginContainer/>}/>
                     <Route path="/dialogs"
-                           render={() => <DialogsContainer/>}/>
+                           render={WithSuspanse(DialogsContainer)}/>
 
                 </div>
 
