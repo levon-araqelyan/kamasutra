@@ -34,9 +34,9 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {loginThunkAction, logoutThunkAction})(LoginContainer)
 
 let maxLength20 = maxLengthCreator(40);
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit,error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <Field
                     placeholder={"Login"}
@@ -51,13 +51,14 @@ const LoginForm = (props) => {
                     name="password"
                     component={InputComponent}
                     validate={[requiredFild, maxLength20]}
+                    type="password"
                 />
             </div>
             <div>
                 <Field type="checkbox" name="rememberMy" component={"input"}/> : remember my
             </div>
             {
-                props.error && (<div className={s.allError}>{props.error}</div>)
+                error && (<div className={s.allError}>{error}</div>)
             }
             <div>
                 <button>Login</button>

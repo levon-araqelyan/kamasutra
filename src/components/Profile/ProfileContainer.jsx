@@ -33,7 +33,6 @@ const mapStateToPros = (state) => ({
 });
 
 export default compose(
-    withRouter,
     connect(mapStateToPros,{loading, setUserProfileThunkAction,updateStatus,getStatus}),
         WithAuthRedirect,
     )(ProfileContainer)
