@@ -1,6 +1,6 @@
 {
   "name": "kamasutra",
-  "version": "1.1.0",
+  "version": "0.1.0",
   "homepage": "http://levon-araqelyan.github.io/kamasutra",
   "private": true,
   "dependencies": {
@@ -39,13 +39,13 @@
     "reselect": "^4.0.0"
   },
   "scripts": {
-    "storybook": "start-storybook -p 9009 -s public",
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "storybook": "start-storybook -p 9009 -s public"
   },
   "eslintConfig": {
     "extends": "react-app"

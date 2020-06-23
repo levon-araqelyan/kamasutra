@@ -4,6 +4,7 @@ const SET_NEW_POST_TEXT = "SET_NEW_POST_TEXT";
 const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
+const SAVE_FOTO_SCCSES = "SAVE_FOTO_SCCSES";
 
 const initialState = {
     postData: [
@@ -39,6 +40,13 @@ const profileReduser = (state = initialState, action) => {
             return {
                 ...state,
                 status: action.payload
+            }
+
+        }
+        case SAVE_FOTO_SCCSES : {
+            return {
+                ...state,
+                profile: {...state.profile,photos : action.payload}
             }
 
         }
@@ -108,10 +116,37 @@ export const updateStatus = (status) => {
 
 export const setUserProfileThunkAction = (userId) => {
     return dispatch => {
+
         profileApi.getProfile(userId)
             .then(({data}) => {
                 dispatch(setUserProfile(data));
             })
+    }
+};
+
+export const savePhoto = (photo) => {
+    return dispatch => {
+        profileApi.savePhoto(photo)
+            .then(({data}) => {
+                dispatch(savePhotoSuccses(data.data.photos));
+            })
+    }
+};
+
+export const saveProfile = (profile) => {
+    return async (dispatch,getState) => {
+      const userId = getState().auth.userId;
+      let response = await profileApi.saveProfile({...profile,userId});
+
+                 dispatch(setUserProfileThunkAction(userId));
+
+    }
+};
+
+export const savePhotoSuccses = (fotos) => {
+    return {
+        type: SAVE_FOTO_SCCSES,
+        payload: fotos
     }
 };
 
