@@ -22,9 +22,11 @@ const ProfileInfo = ({isOwer, profile, status, updateStatus, savePhoto,saveProfi
 
     };
 
-    const onSubmit = (formData) => {
-       saveProfile(formData);
-        setIsEditMod(false)
+    const onSubmit =  (formData) => {
+       saveProfile(formData).then(()=>{
+           setIsEditMod(false)
+       })
+
     }
 
     return (
@@ -32,7 +34,7 @@ const ProfileInfo = ({isOwer, profile, status, updateStatus, savePhoto,saveProfi
             <div className={s.avatar}>
                 <img src={profile.photos.large || emoji} alt="no photo"/>
                 {isOwer && <input type="file" onChange={onMyPhotoSelected}/>}
-                {isEditMod ? <ProfileDataForm  profile={profile} onSubmit={onSubmit}/> :
+                {isEditMod ? <ProfileDataForm initialValues={profile} profile={profile} onSubmit={onSubmit}/> :
                     <ProfileData profile={profile} isOwer={isOwer} useEditeMod={() => setIsEditMod(true)}/>}
 
                 <ProfileStatus status={status} updateStatus={updateStatus} />

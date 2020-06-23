@@ -1,8 +1,9 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
 import InputComponent from "../../Input/InputComponent";
+import s from "../../LoginContainer/LoginContainer.module.scss";
 
-const ProfileDataForm = ({handleSubmit, profile}) => {
+const ProfileDataForm = ({handleSubmit, profile,error}) => {
     // let maxLength20 = maxLengthCreator(40);
     return (
         <form onSubmit={handleSubmit}>
@@ -49,9 +50,22 @@ const ProfileDataForm = ({handleSubmit, profile}) => {
                 />
             </div>
             <div>
-                {/*    <b>Contacts</b> : {Object.keys(profile.contacts).map(key =>*/}
-                {/*    <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>*/}
-                {/*)}*/}
+                    <b>Contacts</b> : {Object.keys(profile.contacts).map(key =>
+                    <div>
+                        <b>{key}</b> :
+                        <Field
+                            placeholder={key}
+                            name={`contacts.${key}`}
+                            component={InputComponent}
+                        />
+                    </div>
+                )}
+
+            </div>
+            {
+                error && (<div className={s.allError}>{error}</div>)
+            }
+            <div>
             </div>
         </form>
     )
