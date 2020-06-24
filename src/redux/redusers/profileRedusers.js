@@ -1,4 +1,4 @@
-import {profileApi, usersApi} from "../../api/api";
+import {profileApi} from "../../api/api";
 import {stopSubmit} from "redux-form";
 
 const SET_NEW_POST_TEXT = "SET_NEW_POST_TEXT";
@@ -6,6 +6,7 @@ const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 const SAVE_FOTO_SCCSES = "SAVE_FOTO_SCCSES";
+const LOADING_SHOW = "LOADING_SHOW";
 
 const initialState = {
     postData: [
@@ -14,7 +15,8 @@ const initialState = {
     ],
     profile: null,
     newPostText: "",
-    status:""
+    isLoading: false,
+    status: ""
 };
 
 
@@ -23,17 +25,28 @@ const profileReduser = (state = initialState, action) => {
         case ADD_POST : {
             return {
                 ...state,
-                postData:[...state.postData,{id: state.postData.length + 1,message:state.newPostText,likeCount:1}],
-                newPostText:""
+                postData: [{
+                    id: state.postData.length + 1,
+                    message: state.newPostText,
+                    likeCount: 1
+                }, ...state.postData],
+                newPostText: ""
             }
 
         }
 
+        case LOADING_SHOW : {
+            return {
+                ...state,
+                isLoading: !state.isLoading
+            }
+
+        }
         case SET_NEW_POST_TEXT : {
-           return {
-               ...state,
-               newPostText: action.payload
-           }
+            return {
+                ...state,
+                newPostText: action.payload
+            }
 
         }
 
@@ -47,7 +60,7 @@ const profileReduser = (state = initialState, action) => {
         case SAVE_FOTO_SCCSES : {
             return {
                 ...state,
-                profile: {...state.profile,photos : action.payload}
+                profile: {...state.profile, photos: action.payload}
             }
 
         }
@@ -69,6 +82,12 @@ const profileReduser = (state = initialState, action) => {
 export const addPostActionCreator = () => {
     return {
         type: ADD_POST
+    }
+};
+
+export const showLoadingLogics = () => {
+    return {
+        type: LOADING_SHOW
     }
 };
 
@@ -108,7 +127,7 @@ export const updateStatus = (status) => {
     return dispatch => {
         profileApi.updateStatus(status)
             .then(({data}) => {
-                if(data.resultCode === 0){
+                if (data.resultCode === 0) {
                     dispatch(setStatus(status));
                 }
             })
@@ -116,12 +135,14 @@ export const updateStatus = (status) => {
 };
 
 export const setUserProfileThunkAction = (userId) => {
-    return dispatch => {
 
-        profileApi.getProfile(userId)
-            .then(({data}) => {
-                dispatch(setUserProfile(data));
-            })
+    return async dispatch => {
+        dispatch(showLoadingLogics());
+       const {data} = await profileApi.getProfile(userId);
+
+        dispatch(setUserProfile(data));
+        dispatch(showLoadingLogics())
+
     }
 };
 
@@ -135,21 +156,21 @@ export const savePhoto = (photo) => {
 };
 
 export const saveProfile = (profile) => {
-    return async (dispatch,getState) => {
-      const userId = getState().auth.userId;
-      let response = await profileApi.saveProfile({...profile,userId});
-             if(response.data.resultCode === 0){
-                 dispatch(setUserProfileThunkAction(userId));
-             }else{
-                 const error = response.data.messages[0];
-                 let index =  error.indexOf("Contacts->");
-                 let rez = error.slice(index + 10,error.length - 1).toLowerCase();
+    return async (dispatch, getState) => {
+        const userId = getState().auth.userId;
+        let response = await profileApi.saveProfile({...profile, userId});
+        if (response.data.resultCode === 0) {
+            dispatch(setUserProfileThunkAction(userId));
+        } else {
+            const error = response.data.messages[0];
+            let index = error.indexOf("Contacts->");
+            let rez = error.slice(index + 10, error.length - 1).toLowerCase();
 
-                 dispatch(stopSubmit("edit-profile",{"contacts":{[rez]:error}}))
+            dispatch(stopSubmit("edit-profile", {"contacts": {[rez]: error}}))
 
-                 return Promise.reject(error)
+            return Promise.reject(error)
 
-             }
+        }
 
 
     }

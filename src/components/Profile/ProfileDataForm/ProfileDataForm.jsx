@@ -2,14 +2,16 @@ import React from "react";
 import {Field, reduxForm} from "redux-form";
 import InputComponent from "../../Input/InputComponent";
 import s from "../../LoginContainer/LoginContainer.module.scss";
+import Button from "../../Button/Button";
+import {maxLengthCreator} from "../../../utils/validation/validation";
 
 const ProfileDataForm = ({handleSubmit, profile,error}) => {
-    // let maxLength20 = maxLengthCreator(40);
+    let maxLength20 = maxLengthCreator(40);
     return (
         <form onSubmit={handleSubmit}>
-            <button>
+            <Button>
                 save
-            </button>
+            </Button>
             <div>
                 <b>full Name</b> :
                 <Field

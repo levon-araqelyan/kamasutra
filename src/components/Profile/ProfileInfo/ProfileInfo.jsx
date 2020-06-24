@@ -4,15 +4,15 @@ import emoji from "../../../imges/emoji.jpg";
 import Loading from "../../Loading/Loading";
 import ProfileStatus from "../ProfileStatus/ProfileStatus";
 import ProfileDataForm from "../ProfileDataForm/ProfileDataForm";
+import Button from "../../Button/Button";
 
 
-const ProfileInfo = ({isOwer, profile, status, updateStatus, savePhoto,saveProfile}) => {
+const ProfileInfo = ({isOwer, profile, status, updateStatus, savePhoto, saveProfile}) => {
 
-    const [isEditMod,setIsEditMod] = useState(false);
-    // const [visibleMobileMenu, setVisibleMobileMenu] = useState(false)
+    const [isEditMod, setIsEditMod] = useState(false);
 
     if (!profile) {
-        return <Loading />
+        return <Loading/>
     }
 
     const onMyPhotoSelected = (e) => {
@@ -22,10 +22,10 @@ const ProfileInfo = ({isOwer, profile, status, updateStatus, savePhoto,saveProfi
 
     };
 
-    const onSubmit =  (formData) => {
-       saveProfile(formData).then(()=>{
-           setIsEditMod(false)
-       })
+    const onSubmit = (formData) => {
+        saveProfile(formData).then(() => {
+            setIsEditMod(false)
+        })
 
     }
 
@@ -33,11 +33,19 @@ const ProfileInfo = ({isOwer, profile, status, updateStatus, savePhoto,saveProfi
         <div className={s.infoWrap}>
             <div className={s.avatar}>
                 <img src={profile.photos.large || emoji} alt="no photo"/>
-                {isOwer && <input type="file" onChange={onMyPhotoSelected}/>}
+                {isOwer && <div>
+
+
+                    <label className={s.label}>
+                        <input type="file" onChange={onMyPhotoSelected} style={{width: "200px", background: "black"}}/>
+                          Custom Upload Photo
+                    </label>
+
+                </div>}
                 {isEditMod ? <ProfileDataForm initialValues={profile} profile={profile} onSubmit={onSubmit}/> :
                     <ProfileData profile={profile} isOwer={isOwer} useEditeMod={() => setIsEditMod(true)}/>}
 
-                <ProfileStatus status={status} updateStatus={updateStatus} />
+                <ProfileStatus status={status} updateStatus={updateStatus}/>
             </div>
         </div>
     )
@@ -47,7 +55,7 @@ export default ProfileInfo
 
 const Contact = ({contactTitle, contactValue}) => {
     return (
-        <div>
+        <div className={s.contact}>
             <b>{contactTitle}</b> : {contactValue}
         </div>
     )
@@ -55,8 +63,8 @@ const Contact = ({contactTitle, contactValue}) => {
 
 const ProfileData = ({profile, isOwer, useEditeMod}) => {
     return (
-        <div>
-            {isOwer && <button onClick={useEditeMod}>edit</button>}
+        <div className={s.dataWrap}>
+            {isOwer && <Button onClick={useEditeMod}>edit</Button>}
             <div>
                 <b>full Name</b> : {profile.fullName}
             </div>
@@ -72,11 +80,11 @@ const ProfileData = ({profile, isOwer, useEditeMod}) => {
             <div>
                 <b>About my</b> : {profile.aboutMe}
             </div>
-            <div>
+            <p>
                 <b>Contacts</b> : {Object.keys(profile.contacts).map(key =>
                 <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
             )}
-            </div>
+            </p>
         </div>
     )
 };

@@ -3,9 +3,9 @@ import s from "./Users.module.scss";
 import emoji from "../../imges/emoji.jpg";
 import Pagination from "../Pagination/Pagination";
 import {NavLink} from "react-router-dom";
+import Button from "../Button/Button";
 
 const Users = ({totalCount, pageSize, currentPage, changePage, users, handleFollowed,followProgress}) => {
-
     return (
 
         <div>
@@ -17,12 +17,12 @@ const Users = ({totalCount, pageSize, currentPage, changePage, users, handleFoll
                         <NavLink to={`/profile/${el.id}`}>
                             <img src={el.photos.small ? el.photos.small : emoji} alt="user img"/>
                         </NavLink>
-                        <button
+                        <Button
                             onClick={() => handleFollowed(el.followed, el.id)}
                             disabled={followProgress.some(i => i === el.id)}
                         >
                             {el.followed ? "Unfollow" : "follow"}
-                        </button>
+                        </Button>
                     </div>
 
                     <div className={s.infoWrap}>

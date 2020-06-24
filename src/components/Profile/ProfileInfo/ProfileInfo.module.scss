@@ -9,6 +9,36 @@
 
   .avatar{
     padding: 10px;
+
   }
 }
 
+.dataWrap{
+  div{
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+  }
+
+  .contact{
+    margin-left: 30px;
+  }
+}
+
+
+.label{
+  background-color:cornflowerblue;
+  border-radius:28px;
+  border:1px solid cornflowerblue;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:15px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #2f6627;
+  padding: 5px 20px;
+
+  input[type="file"] {
+    display: none;
+  }
+}

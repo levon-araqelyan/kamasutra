@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
+import Button from "../Button/Button";
+import s from "./Pagination.module.scss"
 
 function Pagination(props) {
   const { pageSize, totalCount, pageButtons, page } = props;
@@ -9,49 +11,49 @@ function Pagination(props) {
   if (totalAmount >= 7) {
     if (page > 1) {
       butons.push(
-        <button onClick={pageButtons} value={1} key={1} type="button">
+        <Button onClick={pageButtons} value={1} key={1} type="button">
           {1}
-        </button>
+        </Button>
       );
     }
     if (page > 3) {
       butons.push(
-        <button onClick={pageButtons} value={page - 2} key="...1" type="button">
+        <Button onClick={pageButtons} value={page - 2} key="...1" type="button">
           ...
-        </button>
+        </Button>
       );
     }
     if (page >= 3) {
       butons.push(
-        <button onClick={pageButtons} value={page - 1} key={page - 1} type="button">
+        <Button onClick={pageButtons} value={page - 1} key={page - 1} type="button">
           {page - 1}
-        </button>
+        </Button>
       );
     }
     butons.push(
-      <button onClick={pageButtons} value={page} key={page} style={{ color: "red" }} type="button">
+      <Button onClick={pageButtons} value={page} key={page} style={{ color: "red" }} type="button">
         {page}
-      </button>
+      </Button>
     );
     if (totalAmount - page >= 1) {
       butons.push(
-        <button onClick={pageButtons} key={+page + 1} value={+page + 1} type="button">
+        <Button onClick={pageButtons} key={+page + 1} value={+page + 1} type="button">
           {+page + 1}
-        </button>
+        </Button>
       );
     }
     if (totalAmount - page > 2) {
       butons.push(
-        <button onClick={pageButtons} key="...2" value={+page + 2} type="button">
+        <Button onClick={pageButtons} key="...2" value={+page + 2} type="button">
           ...
-        </button>
+        </Button>
       );
     }
     if (page < totalAmount - 1) {
       butons.push(
-        <button onClick={pageButtons} key={totalAmount} value={totalAmount} type="button">
+        <Button onClick={pageButtons} key={totalAmount} value={totalAmount} type="button">
           {totalAmount}
-        </button>
+        </Button>
       );
     }
   } else {
@@ -63,16 +65,16 @@ function Pagination(props) {
         };
       }
       butons.push(
-        <button onClick={pageButtons} key={i} value={i} style={styleFlag} type="button">
+        <Button onClick={pageButtons} key={i} value={i} style={styleFlag} type="button">
           {i}
-        </button>
+        </Button>
       );
     }
   }
 
   return (
     <React.Fragment>
-      <span>{butons}</span>
+      <div className={s.buttonsWrap}>{butons}</div>
     </React.Fragment>
   );
 }
