@@ -50,10 +50,16 @@ export const authApi = {
     me(){
         return istanse.get(`auth/me`)
     },
-    login(email,password,rememberMe = false){
-        return istanse.post(`auth/login`,{email,password,rememberMe})
+    login(email,password,rememberMe = false,captcha=null){
+        return istanse.post(`auth/login`,{email,password,rememberMe,captcha})
     },
     logout(){
         return istanse.delete(`auth/login`)
     }
+}
+
+export const securityApi = {
+    getCaptchaUrl(){
+        return istanse.get(`security/get-captcha-url`)
+    },
 }

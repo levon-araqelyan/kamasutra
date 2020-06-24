@@ -1,0 +1,33 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks"
+import { action } from "@storybook/addon-actions"
+import Button from "./Button"
+
+<Meta title="Elements/Button" component={Button} />
+
+# Button
+
+`Button` with `buttonStyle="outlined"` should be placed on the dark background.
+
+<Preview>
+  <Story name="spec">
+    <form>
+      <Button onClick={action("Button click")}> Default </Button>
+      <Button onClick={action("Button click")} buttonStyle="outlinedBlack">
+        Outlined Black
+      </Button>
+      <Button onClick={action("Button click")} buttonStyle="black">
+        Black
+      </Button>
+      <Button onClick={action("Button click")} disabled>
+        Disabled
+      </Button>
+      <Button onClick={action("Button click")} buttonStyle="outlined">
+        Outlined
+      </Button>
+    </form>
+  </Story>
+</Preview>
+
+## Props
+
+<Props of={Button} />

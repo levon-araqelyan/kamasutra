@@ -2,3 +2,17 @@
   padding: 5px;
   border: 1px solid red;
 }
+
+.loginWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 200px);
+}
+
+form {
+  div{
+    padding: 5px;
+  }
+}

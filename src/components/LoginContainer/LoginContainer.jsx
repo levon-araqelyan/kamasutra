@@ -6,12 +6,13 @@ import {connect} from "react-redux";
 import {loginThunkAction, logoutThunkAction} from "../../redux/redusers/authRedusers";
 import {Redirect} from "react-router-dom";
 import s from "./LoginContainer.module.scss"
+import Button from "../Button/Button";
 
 
 class LoginContainer extends React.Component {
     onSubmit = (formData) => {
-        const {login, password, rememberMy} = formData;
-        this.props.loginThunkAction(login, password, rememberMy)
+        const {login, password, rememberMy , captcha} = formData;
+        this.props.loginThunkAction(login, password, rememberMy ,captcha)
     };
 
     render() {
@@ -19,24 +20,25 @@ class LoginContainer extends React.Component {
             return <Redirect to={"/profile"}/>
         }
         return (
-            <div>
+            <div className={s.loginWrap}>
                 <h1>Login</h1>
-                <LoginReduxForm onSubmit={this.onSubmit}/>
+                <LoginReduxForm onSubmit={this.onSubmit} captchaUrl={this.props.captchaUrl}/>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
 });
 
 export default connect(mapStateToProps, {loginThunkAction, logoutThunkAction})(LoginContainer)
 
 let maxLength20 = maxLengthCreator(40);
-const LoginForm = (props) => {
+const LoginForm = ({error,handleSubmit,captchaUrl}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <Field
                     placeholder={"Login"}
@@ -51,16 +53,24 @@ const LoginForm = (props) => {
                     name="password"
                     component={InputComponent}
                     validate={[requiredFild, maxLength20]}
+                    type="password"
                 />
             </div>
             <div>
                 <Field type="checkbox" name="rememberMy" component={"input"}/> : remember my
             </div>
+            {captchaUrl && <img src={captchaUrl} />}
+            {captchaUrl &&  <Field
+                placeholder={"captcha"}
+                name="captcha"
+                component={InputComponent}
+                validate={[requiredFild, maxLength20]}
+            />}
             {
-                props.error && (<div className={s.allError}>{props.error}</div>)
+               error && (<div className={s.allError}>{error}</div>)
             }
             <div>
-                <button>Login</button>
+                <Button>Login</Button>
             </div>
         </form>
     )

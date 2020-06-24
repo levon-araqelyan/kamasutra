@@ -1,14 +1,16 @@
-import {authApi} from "../../api/api";
+import {authApi, securityApi} from "../../api/api";
 import {stopSubmit} from "redux-form";
 
 
 const SET_USER_DATA = "SET_USER_DATA";
+const GET_CAPTCHA_URL_SUCCESS = "GET_CAPTCHA_URL_SUCCESS";
 
 const initialState = {
   userId: null,
     email:null,
     login:null,
-    isAuth:false
+    isAuth:false,
+    captchaUrl:null
 };
 
 const authReduser = (state = initialState, action) => {
@@ -18,6 +20,12 @@ const authReduser = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload,
+            };
+        }
+        case GET_CAPTCHA_URL_SUCCESS : {
+            return {
+                ...state,
+                captchaUrl: action.payload,
             };
         }
         default: {
@@ -49,15 +57,18 @@ export const getAuthUserDataThunkAction = () => {
     }
 };
 
-export const loginThunkAction = (email,password,rememberMe) => {
+export const loginThunkAction = (email,password,rememberMe,captcha) => {
     return  dispatch => {
 
-        authApi.login(email,password,rememberMe)
+        authApi.login(email,password,rememberMe,captcha)
             .then(({data}) => {
 
                 if(data.resultCode === 0){
                     dispatch(getAuthUserDataThunkAction())
                 }else {
+                    if(data.resultCode === 10){
+                        dispatch(getCaptchaUrl())
+                    }
                     let message = data.messages.length > 0 ? data.messages[0] : "yor login or password not true";
                     dispatch(stopSubmit("login",{_error:message}))
                 }
@@ -75,6 +86,21 @@ export const logoutThunkAction = () => {
                 }
             })
     }
+};
+
+export const getCaptchaUrl = () => {
+    return async dispatch => {
+      const {data} = await securityApi.getCaptchaUrl();
+      const captchaUrl = data.url;
+        dispatch(getCaptchaUrlSuccsess(captchaUrl))
+    }
+};
+
+export const getCaptchaUrlSuccsess = (captchaUrl) => {
+   return {
+       type:GET_CAPTCHA_URL_SUCCESS,
+       payload : captchaUrl
+   }
 };
 
 

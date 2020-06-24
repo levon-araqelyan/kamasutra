@@ -30,6 +30,7 @@ class App extends Component {
                 <div className="AppContainer">
 
                     <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                    <Route exact path="/" render={() => <ProfileContainer/>}/>
                     <Route path="/users" render={() => <UsersContainer/>}/>
                     <Route path="/login" render={() => <LoginContainer/>}/>
                     <Route path="/dialogs"
