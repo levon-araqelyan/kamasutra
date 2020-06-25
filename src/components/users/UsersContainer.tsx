@@ -15,13 +15,37 @@ import {
     getIsFetching,
     getPageSize,
     getTotalCount,
-    getUsers, getUsersWithSelector
+    getUsersWithSelector
 } from "../../redux/selectors/usersSelectors";
+import {UsersType} from "../../types/types"
+import {AppStateType} from "../../redux/reduxStore";
+
+type MapStatePropsType = {
+    currentPage:number
+    pageSize:number
+    isFetching:boolean
+    totalCount:number
+    users:Array<UsersType>
+    followProgress: Array<number>
+}
+
+type MapDispatchPropsType = {
+    getUsersThunkCreator:(currentPage: number, pageSize: number)=> void
+    followingInProgress:(id:number,bool:boolean)=> void
+    UnfollowThunkCreator:(id:number)=>void
+    followThunkCreator:(id:number)=>void
+}
+
+type OwnPropsType = {
+    pageTitle: string
+}
 
 
-class UsersContainer extends React.Component {
+type PropsType = OwnPropsType & MapDispatchPropsType & MapStatePropsType
 
-    handleFollowed = (followed, id) => {
+class UsersContainer extends React.Component<PropsType> {
+
+    handleFollowed = (followed:boolean, id:number) => {
 
            this.props.followingInProgress(id,false);
         if(!followed){
@@ -32,7 +56,7 @@ class UsersContainer extends React.Component {
         }
     };
 
-    changePage = (e) => {
+    changePage = (e:any) => {
         this.props.getUsersThunkCreator(e.target.value,this.props.pageSize)
     };
 
@@ -43,22 +67,23 @@ class UsersContainer extends React.Component {
     render() {
         return (
             <>
+                <h1>{this.props.pageTitle}</h1>
            { !this.props.isFetching ? <Users
                 totalCount={this.props.totalCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 changePage={this.changePage}
-                users={this.props.users.users}
+                users={this.props.users}
                 handleFollowed={this.handleFollowed}
                 followProgress={this.props.followProgress}
 
-           /> : <Loading />}
+           /> : <Loading small={false}/>}
             </>
         )
     }
 }
 
-const mapStateToProps =(state)=> {
+const mapStateToProps =(state:AppStateType):MapStatePropsType=> {
     return {
         users : getUsersWithSelector(state),
         totalCount: getTotalCount(state),
@@ -70,9 +95,7 @@ const mapStateToProps =(state)=> {
 }
 
 export default compose(
-    connect(mapStateToProps,{
-        follow ,
-        loading,
+    connect<MapStatePropsType,MapDispatchPropsType,OwnPropsType,AppStateType>(mapStateToProps,{
         followingInProgress,
         getUsersThunkCreator,
         followThunkCreator,

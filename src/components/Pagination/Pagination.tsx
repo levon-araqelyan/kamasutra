@@ -1,12 +1,20 @@
-import PropTypes from "prop-types";
+
 import React from "react";
 import Button from "../Button/Button";
 import s from "./Pagination.module.scss"
 
-function Pagination(props) {
+type PropsType = {
+  pageSize:number
+  totalCount:number
+  pageButtons:any
+  page:number
+
+}
+
+const Pagination:React.FC<PropsType> = (props)=> {
   const { pageSize, totalCount, pageButtons, page } = props;
   const butons = [];
-  const totalAmount = Math.ceil(totalCount / pageSize)
+  const totalAmount = Math.ceil(totalCount / pageSize);
 
   if (totalAmount >= 7) {
     if (page > 1) {
@@ -65,7 +73,7 @@ function Pagination(props) {
         };
       }
       butons.push(
-        <Button onClick={pageButtons} key={i} value={i} style={styleFlag} type="button">
+        <Button onClick={pageButtons} key={i} value={i} type="button">
           {i}
         </Button>
       );
@@ -79,12 +87,5 @@ function Pagination(props) {
   );
 }
 
-Pagination.propTypes = {
-  users: PropTypes.object.isRequired,
-  repos: PropTypes.object.isRequired,
-  flags: PropTypes.bool.isRequired,
-  pageButtons: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired
-};
 
 export default Pagination;

@@ -1,6 +1,16 @@
 const SET_NEW_MESSAGE_TEXT = "SET_NEW_MESSAGE_TEXT";
 const ADD_DIALOGS_MESSAGE = "ADD_DIALOGS_MESSAGE";
 
+type DialogType ={
+    id:string,
+    name:string
+}
+
+type MessegesDataType = {
+    id:string
+    text:string
+}
+
 const initialState = {
     dialogsData: [
         {id: "1", name: "Levon"},
@@ -8,17 +18,19 @@ const initialState = {
         {id: "3", name: "Maria"},
         {id: "4", name: "Papa"},
         {id: "5", name: "Mama"},
-    ],
+    ] as Array<DialogType>,
     messegesData: [
         {id: "1", text: "how are yo"},
         {id: "2", text: "yu"},
         {id: "3", text: "yo"},
         {id: "4", text: "yo"},
-    ],
-    newMessageText: ""
+    ] as Array<MessegesDataType>,
+    newMessageText : ""
 };
 
-const dialogsReduser = (state = initialState, action) => {
+export type initialStateType = typeof initialState
+
+const dialogsReduser = (state = initialState, action:any):initialStateType => {
 
     switch (action.type) {
         case SET_NEW_MESSAGE_TEXT : {
@@ -32,7 +44,7 @@ const dialogsReduser = (state = initialState, action) => {
             return {
                 ...state,
                 newMessageText: "",
-                messegesData: [...state.messegesData, {id: state.dialogsData.length + 1, text: state.newMessageText}]
+                messegesData: [...state.messegesData, {id: `${state.dialogsData.length + 1}`, text: state.newMessageText}]
             }
         }
         default: {
@@ -41,14 +53,23 @@ const dialogsReduser = (state = initialState, action) => {
     }
 };
 
-export const setNewMessageTextActionCreator = (value) => {
+type SetNewMessageTextActionCreatorType = {
+    type:typeof SET_NEW_MESSAGE_TEXT,
+    payload: string,
+}
+
+export const setNewMessageTextActionCreator = (value:string):SetNewMessageTextActionCreatorType => {
     return {
         type: SET_NEW_MESSAGE_TEXT,
         payload: value
     }
 };
 
-export const addDialogsMessageDataActionCreator = () => {
+type AddDialogsMessageDataActionCreatorType = {
+    type: typeof ADD_DIALOGS_MESSAGE,
+}
+
+export const addDialogsMessageDataActionCreator = ():AddDialogsMessageDataActionCreatorType => {
     return {
         type: ADD_DIALOGS_MESSAGE,
     }

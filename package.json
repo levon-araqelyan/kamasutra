@@ -1,7 +1,7 @@
 {
   "name": "kamasutra",
   "version": "0.1.0",
-  "homepage": "http://levon-araqelyan.github.io/kamasutra",
+  "homepage": "http://levon-araqelyan.github.io/",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.4.4",
@@ -20,6 +20,13 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^14.0.14",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/redux-form": "^8.2.6",
     "axios": "^0.19.2",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
@@ -28,6 +35,7 @@
     "babel-preset-es2015": "^6.0.15",
     "babel-preset-stage-0": "^6.0.15",
     "node-sass": "^4.14.1",
+    "prop-types": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
@@ -37,7 +45,7 @@
     "redux-form": "^8.3.6",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "prop-types": "latest"
+    "typescript": "^3.9.5"
   },
   "scripts": {
     "start": "react-scripts start",

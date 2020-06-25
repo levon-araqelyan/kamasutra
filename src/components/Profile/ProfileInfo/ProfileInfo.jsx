@@ -80,11 +80,11 @@ const ProfileData = ({profile, isOwer, useEditeMod}) => {
             <div>
                 <b>About my</b> : {profile.aboutMe}
             </div>
-            <p>
+            <div>
                 <b>Contacts</b> : {Object.keys(profile.contacts).map(key =>
                 <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
             )}
-            </p>
+            </div>
         </div>
     )
 };

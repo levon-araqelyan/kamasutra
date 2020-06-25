@@ -4,8 +4,19 @@ import emoji from "../../imges/emoji.jpg";
 import Pagination from "../Pagination/Pagination";
 import {NavLink} from "react-router-dom";
 import Button from "../Button/Button";
+import {UsersType} from "../../types/types"
 
-const Users = ({totalCount, pageSize, currentPage, changePage, users, handleFollowed,followProgress}) => {
+type PrpsTypes = {
+    totalCount:number
+    pageSize:number
+    currentPage:number
+    changePage: (e:any)=> void
+    users: Array<UsersType>
+    handleFollowed: (followed:boolean, id:number)=> void
+    followProgress: Array<number>
+}
+
+const Users:React.FC<PrpsTypes> = ({totalCount, pageSize, currentPage, changePage, users, handleFollowed,followProgress}) => {
     return (
 
         <div>

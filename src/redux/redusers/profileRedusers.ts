@@ -1,5 +1,6 @@
 import {profileApi} from "../../api/api";
 import {stopSubmit} from "redux-form";
+import {PhotosType, PostDataType, PrfileType} from "../../types/types";
 
 const SET_NEW_POST_TEXT = "SET_NEW_POST_TEXT";
 const ADD_POST = "ADD_POST";
@@ -12,15 +13,16 @@ const initialState = {
     postData: [
         {id: 1, message: "my first post", likeCount: 1},
         {id: 2, message: "yes", likeCount: 11},
-    ],
-    profile: null,
+    ] as Array<PostDataType>,
+    profile: null as PrfileType | null,
     newPostText: "",
     isLoading: false,
     status: ""
 };
 
+export type initialStateType = typeof initialState
 
-const profileReduser = (state = initialState, action) => {
+const profileReduser = (state = initialState, action:any):initialStateType => {
     switch (action.type) {
         case ADD_POST : {
             return {
@@ -60,7 +62,7 @@ const profileReduser = (state = initialState, action) => {
         case SAVE_FOTO_SCCSES : {
             return {
                 ...state,
-                profile: {...state.profile, photos: action.payload}
+                profile: {...state.profile, photos: action.payload}as PrfileType
             }
 
         }
@@ -79,64 +81,86 @@ const profileReduser = (state = initialState, action) => {
     }
 }
 
-export const addPostActionCreator = () => {
+type AddPostActionCreatorType = {
+    type:typeof ADD_POST
+}
+
+export const addPostActionCreator = ():AddPostActionCreatorType => {
     return {
         type: ADD_POST
     }
 };
 
-export const showLoadingLogics = () => {
+type ShowLoadingLogicsType = {
+    type:typeof LOADING_SHOW
+}
+
+export const showLoadingLogics = ():ShowLoadingLogicsType => {
     return {
         type: LOADING_SHOW
     }
 };
 
-export const setNewPostTextActionCreator = (value) => {
+type SetNewPostTextActionCreatorType = {
+    type:typeof SET_NEW_POST_TEXT
+    payload: string
+}
+
+export const setNewPostTextActionCreator = (value:string):SetNewPostTextActionCreatorType => {
     return {
         type: SET_NEW_POST_TEXT,
         payload: value
     }
 };
 
-export const setUserProfile = (data) => {
+type SetUserProfileType = {
+    type:typeof SET_USER_PROFILE
+    payload: PrfileType
+}
+
+export const setUserProfile = (data:PrfileType):SetUserProfileType => {
     return {
         type: SET_USER_PROFILE,
         payload: data
     }
 };
 
-export const setStatus = (status) => {
+type SetStatusType = {
+    type:typeof SET_STATUS
+    payload: string
+}
+
+export const setStatus = (status:string):SetStatusType => {
     return {
         type: SET_STATUS,
         payload: status
     }
 };
 
-export const getStatus = (userId) => {
-    return dispatch => {
+export const getStatus = (userId:number) => {
+    return async (dispatch:any) => {
 
-        profileApi.getStatus(userId)
-            .then(({data}) => {
+       const {data} = await profileApi.getStatus(userId)
+
                 dispatch(setStatus(data));
-            })
+
     }
 };
 
-export const updateStatus = (status) => {
+export const updateStatus = (status:string) => {
 
-    return dispatch => {
-        profileApi.updateStatus(status)
-            .then(({data}) => {
+    return async (dispatch:any) => {
+       const {data} = await profileApi.updateStatus(status)
+
                 if (data.resultCode === 0) {
                     dispatch(setStatus(status));
                 }
-            })
     }
 };
 
-export const setUserProfileThunkAction = (userId) => {
+export const setUserProfileThunkAction = (userId:number) => {
 
-    return async dispatch => {
+    return async (dispatch:any) => {
         dispatch(showLoadingLogics());
        const {data} = await profileApi.getProfile(userId);
 
@@ -146,17 +170,17 @@ export const setUserProfileThunkAction = (userId) => {
     }
 };
 
-export const savePhoto = (photo) => {
-    return dispatch => {
-        profileApi.savePhoto(photo)
-            .then(({data}) => {
+export const savePhoto = (photo:PhotosType) => {
+    return async (dispatch:any) => {
+       const {data} = await profileApi.savePhoto(photo);
+
                 dispatch(savePhotoSuccses(data.data.photos));
-            })
+
     }
 };
 
-export const saveProfile = (profile) => {
-    return async (dispatch, getState) => {
+export const saveProfile = (profile:PrfileType) => {
+    return async (dispatch:any, getState:any) => {
         const userId = getState().auth.userId;
         let response = await profileApi.saveProfile({...profile, userId});
         if (response.data.resultCode === 0) {
@@ -176,7 +200,12 @@ export const saveProfile = (profile) => {
     }
 };
 
-export const savePhotoSuccses = (fotos) => {
+type SavePhotoSuccsesType = {
+    type:typeof SAVE_FOTO_SCCSES,
+    payload: PhotosType
+}
+
+export const savePhotoSuccses = (fotos:any):SavePhotoSuccsesType => {
     return {
         type: SAVE_FOTO_SCCSES,
         payload: fotos

@@ -11,7 +11,9 @@ const istanse = axios.create({
 export const usersApi = {
     getUsers(currentPage,pageSize){
         return  istanse.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => response.data)
+            .then(response => {
+                return response.data
+            })
     },
     follow(id){
         return  istanse.delete(`follow/${id}`)

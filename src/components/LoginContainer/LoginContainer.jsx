@@ -21,6 +21,10 @@ class LoginContainer extends React.Component {
         }
         return (
             <div className={s.loginWrap}>
+                <div>registration is paid, but you can use my page
+                    <p><b>login</b> : Levon.araqelyan.89@gmail.com</p>
+                    <p><b>password</b> : 101089lev</p>
+                </div>
                 <h1>Login</h1>
                 <LoginReduxForm onSubmit={this.onSubmit} captchaUrl={this.props.captchaUrl}/>
             </div>
