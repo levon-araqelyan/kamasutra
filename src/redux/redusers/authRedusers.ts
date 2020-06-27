@@ -71,7 +71,7 @@ export const getAuthUserDataThunkAction = () => {
     }
 };
 
-export const loginThunkAction = (email: string, password: string, rememberMe: boolean, captcha: string) => {
+export const loginThunkAction = (email: string, password: string, rememberMe: boolean, captcha: string | null) => {
     return async (dispatch: any) => {
 
         const {data} = await authApi.login(email, password, rememberMe, captcha);

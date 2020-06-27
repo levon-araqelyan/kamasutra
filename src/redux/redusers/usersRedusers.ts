@@ -1,5 +1,8 @@
 import {usersApi} from "../../api/api";
 import {UsersType} from "../../types/types";
+import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../reduxStore"
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
@@ -20,7 +23,7 @@ const initialState = {
 
 type initialStateType = typeof initialState
 
-const usersReduser = (state = initialState, action: any): initialStateType => {
+const usersReduser = (state = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
         case SET_USERS: {
             return {
@@ -69,6 +72,8 @@ const usersReduser = (state = initialState, action: any): initialStateType => {
     }
 };
 
+type ActionsType = FollowType | UnFollowType | SetUsersType | SetCorrentPagetaype | LoadingType | FollowingInProgressType
+
 type FollowType = {
     type: typeof FOLLOW,
     payload: number
@@ -96,12 +101,12 @@ export const unFollow = (userId: number): UnFollowType => {
 type SetUsersType = {
     type: typeof SET_USERS,
     payload: {
-        users: UsersType
+        users: Array<UsersType>
         totalCount: number
     }
 }
 
-export const setUsers = (users: UsersType, totalCount: number): SetUsersType => {
+export const setUsers = (users: Array<UsersType>, totalCount: number): SetUsersType => {
     return {
         type: SET_USERS,
         payload: {
@@ -154,9 +159,9 @@ export const followingInProgress = (id: number, bull: boolean): FollowingInProgr
     }
 };
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkAction<Promise<void>,AppStateType,unknown,ActionsType> => {
 
-    return async (dispatch: any) => {
+    return async (dispatch) => {
         dispatch(loading(true));
         const data = await usersApi.getUsers(currentPage, pageSize);
         dispatch(setUsers(data.items, data.totalCount));
@@ -168,7 +173,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
 
 export const followThunkCreator = (id: number) => {
 
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch<ActionsType>) => {
         const {data} = await usersApi.follow(id);
         if (data.resultCode === 0) {
             dispatch(unFollow(id))
@@ -178,7 +183,7 @@ export const followThunkCreator = (id: number) => {
 };
 
 export const UnfollowThunkCreator = (id: number) => {
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch<ActionsType>) => {
         const {data} = await usersApi.Unfollow(id);
 
         if (data.resultCode === 0) {

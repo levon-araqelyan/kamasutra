@@ -3,16 +3,20 @@ import s from "./Dialogs.module.scss"
 import DialogItem from "./DialogItem/DialogItem";
 import Massages from "./Massages/Massages";
 import MessengerChatInput from "../MessengerChatInput/MessengerChatInput";
-import {initialStateType} from "../../redux/redusers/dialogsRedusers";
+import {
+    addDialogsMessageDataActionCreator,
+    initialStateType,
+    setNewMessageTextActionCreator
+} from "../../redux/redusers/dialogsRedusers";
 
 
 type PropsType = {
-    addDialogsMessage: ()=> void
-    handleTextareaChange: (value:string)=> void
+    addDialogsMessageDataActionCreator: ()=> void
+    setNewMessageTextActionCreator: (value:string)=> void
     state: initialStateType
 }
 
-const Dialogs:FC<PropsType> = ({addDialogsMessage,handleTextareaChange,state}) => {
+const Dialogs:FC<PropsType> = ({addDialogsMessageDataActionCreator,setNewMessageTextActionCreator,state}) => {
     return (
         <div className={s.dialogWrap}>
             <div className={s.dialogItems}>
@@ -27,8 +31,8 @@ const Dialogs:FC<PropsType> = ({addDialogsMessage,handleTextareaChange,state}) =
                 ))}
 
                 <MessengerChatInput
-                    setValue={handleTextareaChange}
-                    sendMessage={addDialogsMessage}
+                    setValue={setNewMessageTextActionCreator}
+                    sendMessage={addDialogsMessageDataActionCreator}
                     valueOfInput={state.newMessageText}
                 />
 

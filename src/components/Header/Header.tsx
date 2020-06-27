@@ -1,10 +1,14 @@
-import React from 'react'
+import React,{FC} from 'react'
 import logo from "../../imges/logo192.png";
 import s from "./Header.module.scss"
 import { NavLink} from "react-router-dom";
 import Button from "../Button/Button";
 
-const Header = (props) => {
+type PropsType = {
+    login?:string | null
+    logoutThunkAction?:()=> void
+}
+const Header:FC<PropsType> = (props) => {
     return (
         <header className={s.header}>
             <img src={logo} alt="logo"/>

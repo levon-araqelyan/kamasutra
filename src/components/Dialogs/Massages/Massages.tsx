@@ -1,8 +1,11 @@
-import React from "react"
+import React,{FC} from "react"
 import s from "./Messages.module.scss"
 
+type PropsType = {
+    text:string
+}
 
-const Massages = ({text}) => {
+const Massages:FC<PropsType> = ({text}) => {
     return (
         <div className={s.message}>{text}</div>
     )

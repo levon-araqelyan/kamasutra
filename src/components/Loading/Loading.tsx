@@ -1,7 +1,11 @@
-import React from "react";
+import React,{FC} from "react";
 import styles from "./Loading.module.scss";
 
-const Loading = ({ small }) => {
+type PropsType = {
+    small:boolean
+}
+
+const Loading:FC<PropsType> = ({ small }) => {
   return (
     <div className={styles.loadingWrapper}>
       <svg
