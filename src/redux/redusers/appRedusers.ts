@@ -10,7 +10,7 @@ const initialState:initialStateType = {
   initialized : false
 };
 
-const appReduser = (state:initialStateType = initialState, action:any):initialStateType => {
+const appReduser = (state:initialStateType = initialState, action:ActionsType):initialStateType => {
 
     switch (action.type) {
         case INITIALIZED_SUCSSES : {
@@ -26,6 +26,8 @@ const appReduser = (state:initialStateType = initialState, action:any):initialSt
     }
 };
 
+type ActionsType = initializedSucssedActionType
+
 type initializedSucssedActionType = {
     type:typeof INITIALIZED_SUCSSES
 }
@@ -40,7 +42,7 @@ export const initializeApp = () => {
     return  async (dispatch:any) => {
 
        await dispatch(getAuthUserDataThunkAction())
-        dispatch(initializedSucssedAction())
+             dispatch(initializedSucssedAction())
 
             }
 };

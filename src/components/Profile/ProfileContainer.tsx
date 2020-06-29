@@ -1,8 +1,7 @@
 import React from "react"
 import Profile from "./Profile";
-import {withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {loading} from "../../redux/redusers/usersRedusers";
 import {
     getStatus,
     savePhoto,
@@ -13,8 +12,32 @@ import {
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 import Loading from "../Loading/Loading";
+import {PrfileType, UsersType} from "../../types/types";
+import {AppStateType} from "../../redux/reduxStore";
 
-class ProfileContainer extends React.Component {
+type MapStatePropsType = {
+    profile: PrfileType | null
+    status: string
+    userId: number | null
+    isLoading: boolean
+}
+
+type MapDispatchPropsType = {
+    setUserProfileThunkAction:(userId:number | null)=> void
+    updateStatus:()=> void
+    getStatus:(userId:number | string)=> void
+    savePhoto:()=> void
+    saveProfile:()=> void
+}
+
+type OwnPropsType = {
+
+}
+
+
+type PropsType = OwnPropsType & MapDispatchPropsType & MapStatePropsType & RouteComponentProps<any>
+
+class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         this.refreshProfile()
     }
@@ -25,7 +48,7 @@ class ProfileContainer extends React.Component {
         this.props.getStatus(userId ? userId : this.props.userId)
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps:PropsType) {
         if (this.props.match.params !== prevProps.match.params) {
             this.refreshProfile()
         }
@@ -37,7 +60,7 @@ class ProfileContainer extends React.Component {
         return (
             <div>
                 {
-                    isLoading ? <Loading/> :
+                    isLoading ? <Loading small={false}/> :
                         (<Profile
                             {...this.props}
                             profile={this.props.profile}
@@ -52,7 +75,7 @@ class ProfileContainer extends React.Component {
     }
 }
 
-const mapStateToPros = (state) => ({
+const mapStateToPros = (state:AppStateType) => ({
     profile: state.profileReduser.profile,
     status: state.profileReduser.status,
     userId: state.auth.userId,
@@ -61,6 +84,6 @@ const mapStateToPros = (state) => ({
 
 export default compose(
     withRouter,
-    connect(mapStateToPros, {loading, setUserProfileThunkAction, updateStatus, getStatus, savePhoto, saveProfile}),
+    connect(mapStateToPros, {setUserProfileThunkAction, updateStatus, getStatus, savePhoto, saveProfile}),
     WithAuthRedirect,
 )(ProfileContainer)

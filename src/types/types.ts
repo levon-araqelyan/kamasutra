@@ -21,7 +21,7 @@ export type PhotosType = {
 }
 
 export type PrfileType = {
-    userId:number
+    userId:number | null
     lookingForAJob:boolean
     lookingForAJobDescription: number
     fullName:string

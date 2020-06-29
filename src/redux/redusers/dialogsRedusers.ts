@@ -30,7 +30,7 @@ const initialState = {
 
 export type initialStateType = typeof initialState
 
-const dialogsReduser = (state = initialState, action:any):initialStateType => {
+const dialogsReduser = (state = initialState, action:ActionsType):initialStateType => {
 
     switch (action.type) {
         case SET_NEW_MESSAGE_TEXT : {
@@ -52,6 +52,8 @@ const dialogsReduser = (state = initialState, action:any):initialStateType => {
         }
     }
 };
+
+type ActionsType = SetNewMessageTextActionCreatorType | AddDialogsMessageDataActionCreatorType
 
 type SetNewMessageTextActionCreatorType = {
     type:typeof SET_NEW_MESSAGE_TEXT,
