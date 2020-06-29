@@ -4,11 +4,33 @@ import {loginThunkAction, logoutThunkAction} from "../../redux/redusers/authRedu
 import {Redirect} from "react-router-dom";
 import s from "./LoginContainer.module.scss"
 import {LoginReduxForm} from "./LoginForm"
+import {UsersType} from "../../types/types";
+import {AppStateType} from "../../redux/reduxStore";
+
+type MapStatePropsType = {
+    isAuth: boolean,
+    captchaUrl: string | null
+}
+
+type MapDispatchPropsType = {
+    loginThunkAction:(email: string, password: string, rememberMe: boolean, captcha: string | null)=> void
+    logoutThunkAction:(login:string, password:string, rememberMy:boolean ,captcha:string | null)=> void
+}
+
+type OwnPropsType = {
+}
 
 
+type PropsType = OwnPropsType & MapDispatchPropsType & MapStatePropsType
+export type LoginFormValuesType = {
+    login:string
+    password:string
+    rememberMy :boolean
+    captcha:string | null
+}
 
-class LoginContainer extends React.Component {
-    onSubmit = (formData) => {
+class LoginContainer extends React.Component<PropsType> {
+    onSubmit = (formData:LoginFormValuesType) => {
         const {login, password, rememberMy , captcha} = formData;
         this.props.loginThunkAction(login, password, rememberMy ,captcha)
     };
@@ -30,7 +52,7 @@ class LoginContainer extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state:AppStateType):MapStatePropsType => ({
     isAuth: state.auth.isAuth,
     captchaUrl: state.auth.captchaUrl
 });

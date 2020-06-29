@@ -1,13 +1,18 @@
 import {maxLengthCreator, requiredFild} from "../../utils/validation/validation";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import InputComponent from "../Input/InputComponent";
 import s from "./LoginContainer.module.scss";
 import Button from "../Button/Button";
-import React from "react";
+import React,{FC} from "react";
+import {LoginFormValuesType} from "./LoginContainer"
 
 let maxLength20 = maxLengthCreator(40);
 
-const LoginForm = ({error,handleSubmit,captchaUrl}) => {
+type LoginFormOwnProps = {
+    captchaUrl:string | null
+}
+
+const LoginForm:FC<InjectedFormProps<LoginFormValuesType,LoginFormOwnProps> & LoginFormOwnProps> = ({error,handleSubmit,captchaUrl}) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -47,6 +52,6 @@ const LoginForm = ({error,handleSubmit,captchaUrl}) => {
     )
 };
 
-export const LoginReduxForm = reduxForm({
+export const LoginReduxForm = reduxForm<LoginFormValuesType,LoginFormOwnProps>({
     form: 'login',
 })(LoginForm);
